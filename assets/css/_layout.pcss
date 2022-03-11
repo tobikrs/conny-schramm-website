@@ -1,0 +1,9 @@
+@layer base {
+  main > section {
+    @apply py-24;
+  }
+
+  main > section > :not([class*=' max-w-']) {
+    @apply max-w-screen-lg mx-auto px-4;
+  }
+}
