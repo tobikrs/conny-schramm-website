@@ -39,44 +39,123 @@ collections:
               pattern: ['^[a-z]{2}([-])?([A-Za-z]{2})?$', 'Must match "xx" or "xx-XX" syntax (ex. "en" or "sv-SE")'],
             }
           # - { label: Site Email, name: siteemail, widget: string, required: false }
-  - name: 'blog'
-    label: 'Blog'
-    folder: 'content/blog'
+  - name: 'news'
+    label: 'Neuigkeiten'
+    label_singular: 'Neuigkeit'
+    folder: 'content/news'
     create: true
     format: 'frontmatter'
-    slug: '{{fields.createdAt}}-{{slug}}'
-    # editor:
-    #   preview: true
+    slug: '{{year}}-{{slug}}'
+    # TODO: preview_path
     fields:
-      - { label: 'Created Date', name: 'createdAt', widget: 'datetime', date_format: 'YYYY-MM-DD', time_format: false }
-      - { label: 'Title', name: 'title', widget: 'string', required: true }
-      - { label: 'Description', name: 'description', widget: 'string', required: false }
-      - { label: 'Body', name: 'body', widget: 'markdown', required: false }
-  - name: 'projects'
-    label: 'Projects'
-    label_singular: 'Project'
-    folder: 'content/projects'
+      - { label: 'Erstellt am', name: 'date', widget: 'datetime', date_format: true, time_format: false }
+      - { label: 'Titel', name: 'title', widget: 'string', required: true }
+      - { label: 'Inhalt', name: 'body', widget: 'markdown', required: false }
+      - { label: 'Titelbild', name: 'featuredImage', widget: 'image', required: false, allow_multiple: false }
+  - name: 'events'
+    label: 'Veranstaltungen'
+    label_singular: 'Veranstaltung'
+    folder: 'content/angebote/events'
     create: true
     format: 'frontmatter'
-    slug: '{{slug}}'
-    preview_path: 'projects/{{slug}}'
+    slug: '{{year}}-{{month}}-{{day}}_{{slug}}'
+    # TODO: preview_path
     fields:
       - {
-          label: 'Project Category',
+          label: 'Kategorie',
           name: 'category',
           widget: 'select',
-          default: 'animals',
-          options: [{ label: 'Animals', value: 'animals' }, { label: 'Food', value: 'food' }],
+          default: 'lesung',
+          options:
+            [
+              { label: 'Lesung', value: 'lesung' },
+              { label: 'Schullesung', value: 'schullesung' },
+              { label: 'Reisefilm Vorführung', value: 'reisefilm' },
+            ],
         }
-      - { label: 'Title', name: 'title', widget: 'string', required: true }
-      - { label: 'Description', name: 'description', widget: 'string', required: false }
-      - { label: 'Cover Image', name: 'cover', widget: 'image', required: false, allow_multiple: false }
-      - { label: 'Content', name: 'body', widget: 'markdown', required: false }
+      - { label: 'Titel', name: 'title', widget: 'string', required: true }
+      - { label: 'Datum', name: 'date', widget: 'datetime', default: '', date_format: true, time_format: true }
+      - label: 'Ort'
+        name: 'location'
+        widget: 'object'
+        fields:
+          - { label: 'Bezeichnung', name: 'label', widget: 'string', required: false }
+          - { label: 'Adresse', name: 'address', widget: 'string', required: true }
+          - {
+              label: 'Link',
+              name: 'url',
+              widget: 'string',
+              pattern:
+                [
+                  'https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)',
+                  'Muss ein valide Internetaddresse sein',
+                ],
+              required: false,
+            }
+      - { label: 'Titelbild', name: 'featuredImage', widget: 'image', required: false, allow_multiple: false }
+      - { label: 'Beschreibung', name: 'body', widget: 'markdown', required: false }
       - {
-          label: 'Gallery',
+          label: 'Flyer',
+          name: 'flyer',
+          widget: 'file',
+          media_library: { config: { multiple: true } },
+          required: false,
+        }
+      - {
+          label: 'Gallerie',
           name: 'gallery',
           widget: 'list',
           required: false,
           summary: '{{fields.image}}',
-          field: { label: 'Image', name: 'image', widget: 'image' },
+          field: { label: 'Foto', name: 'image', widget: 'image' },
+        }
+  - name: 'books'
+    label: 'Bücher'
+    folder: 'content/books'
+    create: true
+    format: 'frontmatter'
+    slug: '{{slug}}'
+    # TODO: preview_path
+    fields:
+      - { label: 'Veröffentlicht am', name: 'publishedAt', widget: 'datetime', date_format: true, time_format: false }
+      - { label: 'Titel', name: 'title', widget: 'string', required: true }
+      - { label: 'Titelbild', name: 'featuredImage', widget: 'image', required: false, allow_multiple: false }
+      - { label: 'Beschreibung', name: 'body', widget: 'markdown', required: false }
+      - {
+          label: 'ISBN',
+          name: 'isbn',
+          widget: 'string',
+          pattern: ['^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$', 'Muss eine valide ISBN sein'],
+          required: false,
+        }
+      - {
+          label: 'Bestell Link',
+          name: 'buyLink',
+          widget: string,
+          pattern:
+            [
+              'https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)',
+              'Muss ein valide Internetaddresse sein',
+            ],
+          required: false,
+        }
+  - name: 'reisefilme'
+    label: 'Reisefilme'
+    folder: 'content/reisenfilme'
+    create: true
+    format: 'frontmatter'
+    slug: '{{slug}}-{{year}}'
+    fields:
+      - { label: 'Titel', name: 'title', widget: 'string', required: true }
+      - { label: 'Untertitel', name: 'subtitle', widget: 'string', required: false }
+      - { label: 'Jahr', name: 'year', widget: 'number', value_type: 'int', min: 1950, required: true }
+      - { label: 'Titelbild', name: 'featuredImage', widget: 'image', required: true, allow_multiple: false }
+      - { label: 'Beschreibung', name: 'body', widget: 'markdown', required: false }
+      - {
+          label: 'Gallerie',
+          name: 'gallery',
+          widget: 'list',
+          required: false,
+          summary: '{{fields.image}}',
+          field: { label: 'Bild', name: 'image', widget: 'image' },
         }
