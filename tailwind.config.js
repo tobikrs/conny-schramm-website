@@ -12,7 +12,7 @@ function generateSizes(from = 1, to = 96, step = 1, unit = 'rem', unitStep = 0.2
     const key = `${keyPrefix}${n}`
     sizes[key] = `${n * unitStep}${unit}`
 
-    console.log(`added: '${key}': '${sizes[key]}'`)
+    // console.log(`added: '${key}': '${sizes[key]}'`)
   }
 
   return sizes
