@@ -15,30 +15,6 @@ public_folder: /uploads
 
 # Docs: https://www.netlifycms.org/docs/configuration-options/#collections
 collections:
-  - label: 'Site settings'
-    name: 'site'
-    files:
-      - label: 'Info'
-        name: 'info'
-        file: 'content/site/info.json'
-        format: 'json'
-        editor:
-          preview: false
-        fields:
-          - { label: Site Name, name: sitename, widget: string, hint: 'This is used for the site title' }
-          - {
-              label: Site Description,
-              name: sitedescription,
-              widget: string,
-              hint: 'This is used as descriptive text for links that link to this site',
-            }
-          - {
-              label: Site Language,
-              name: sitelang,
-              widget: string,
-              pattern: ['^[a-z]{2}([-])?([A-Za-z]{2})?$', 'Must match "xx" or "xx-XX" syntax (ex. "en" or "sv-SE")'],
-            }
-          # - { label: Site Email, name: siteemail, widget: string, required: false }
   - name: 'news'
     label: 'Neuigkeiten'
     label_singular: 'Neuigkeit'
@@ -140,6 +116,21 @@ collections:
             ],
           required: false,
         }
+      - {
+          label: 'Rezensionen',
+          label_singular: 'Rezension',
+          name: 'testimonials',
+          widget: 'list',
+          required: false,
+          summary: 'von {{fields.name}}',
+          fields:
+            [
+              { label: 'Überschrift', name: 'headline', widget: string, required: false },
+              { label: 'Zitat', name: 'qoute', widget: text, required: true },
+              { label: 'Von', name: 'name', widget: 'string', required: true },
+              { label: 'Datum', name: 'date', widget: 'datetime', date_format: true, time_format: false },
+            ],
+        }
   - name: 'reisefilme'
     label: 'Reisefilme'
     label_singular: 'Reisefilm'
@@ -161,3 +152,27 @@ collections:
           summary: '{{fields.image}}',
           field: { label: 'Bild', name: 'image', widget: 'image' },
         }
+  - label: 'Einstellungen'
+    name: 'settings'
+    files:
+      - label: 'Info'
+        name: 'info'
+        file: 'content/site/info.json'
+        format: 'json'
+        editor:
+          preview: false
+        fields:
+          - { label: Site Name, name: sitename, widget: string, hint: 'This is used for the site title' }
+          - {
+              label: Site Description,
+              name: sitedescription,
+              widget: string,
+              hint: 'This is used as descriptive text for links that link to this site',
+            }
+          - {
+              label: Site Language,
+              name: sitelang,
+              widget: string,
+              pattern: ['^[a-z]{2}([-])?([A-Za-z]{2})?$', 'Must match "xx" or "xx-XX" syntax (ex. "en" or "sv-SE")'],
+            }
+          # - { label: Site Email, name: siteemail, widget: string, required: false }
