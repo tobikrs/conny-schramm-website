@@ -1,7 +1,7 @@
 site_url: https://trusting-stonebraker-90e3e0.netlify.app
 logo_url: https://trusting-stonebraker-90e3e0.netlify.app/icon.png
 
-publish_mode: editorial_workflow
+# publish_mode: editorial_workflow
 backend:
   name: git-gateway
   branch: master
@@ -10,8 +10,8 @@ backend:
 # used together with `npx netlify-cms-proxy-server`. https://www.netlifycms.org/docs/beta-features/#working-with-a-local-git-repository
 local_backend: true
 
-media_folder: static/img
-public_folder: /img
+media_folder: static/uploads
+public_folder: /uploads
 
 # Docs: https://www.netlifycms.org/docs/configuration-options/#collections
 collections:
@@ -55,7 +55,7 @@ collections:
   - name: 'events'
     label: 'Veranstaltungen'
     label_singular: 'Veranstaltung'
-    folder: 'content/angebote/events'
+    folder: 'content/events'
     create: true
     format: 'frontmatter'
     slug: '{{year}}-{{month}}-{{day}}_{{slug}}'
@@ -111,6 +111,7 @@ collections:
         }
   - name: 'books'
     label: 'Bücher'
+    label_singular: 'Buch'
     folder: 'content/books'
     create: true
     format: 'frontmatter'
@@ -141,6 +142,7 @@ collections:
         }
   - name: 'reisefilme'
     label: 'Reisefilme'
+    label_singular: 'Reisefilm'
     folder: 'content/reisenfilme'
     create: true
     format: 'frontmatter'
